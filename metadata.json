@@ -1,0 +1,6 @@
+{
+  "name": "TB Quest",
+  "description": "A gamified interactive learning platform for tuberculosis diagnostic algorithms for undergraduate medical students.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
