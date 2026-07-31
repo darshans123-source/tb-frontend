@@ -51,15 +51,15 @@ export default function CaseSelection({ onSelectCase, onBack, bookmarkedCases, o
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto min-h-[80vh] flex flex-col justify-center">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-[80vh] flex flex-col justify-center">
+      <div className="text-center mb-6 sm:mb-10">
+        <h1 className="text-2xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">
           TB Quest – Case Selection
         </h1>
-        <p className="text-slate-400 font-mono">Choose a TB Case Module to Begin Your Diagnostic Journey</p>
+        <p className="text-slate-400 text-xs sm:text-sm font-mono">Choose a TB Case Module to Begin Your Diagnostic Journey</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {cases.map((c) => {
           const Icon = c.icon;
           const diff = selectedDifficulty[c.id];
@@ -67,7 +67,7 @@ export default function CaseSelection({ onSelectCase, onBack, bookmarkedCases, o
           return (
             <div
               key={c.id}
-              className={`p-8 bg-gradient-to-br ${c.color} border rounded-3xl shadow-lg flex flex-col justify-between group relative`}
+              className={`p-5 sm:p-8 bg-gradient-to-br ${c.color} border rounded-2xl sm:rounded-3xl shadow-lg flex flex-col justify-between group relative`}
             >
               <button
                 onClick={() => onToggleBookmark(c.id)}
@@ -75,22 +75,22 @@ export default function CaseSelection({ onSelectCase, onBack, bookmarkedCases, o
                   isBookmarked ? 'text-amber-400 bg-amber-400/10' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
-                <Bookmark size={20} fill={isBookmarked ? 'currentColor' : 'none'} />
+                <Bookmark size={18} fill={isBookmarked ? 'currentColor' : 'none'} />
               </button>
               <div>
-                <div className="p-3 w-16 bg-slate-900/60 rounded-2xl mb-6 shadow-inner flex items-center justify-center">
-                  <Icon size={32} />
+                <div className="p-2.5 sm:p-3 w-12 sm:w-16 bg-slate-900/60 rounded-2xl mb-4 sm:mb-6 shadow-inner flex items-center justify-center">
+                  <Icon size={28} className="sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">{c.title}</h3>
-                <p className="text-slate-300 text-sm leading-relaxed">{c.desc}</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{c.title}</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{c.desc}</p>
                 
                 {/* Difficulty Toggles */}
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex flex-wrap gap-1.5 sm:gap-2">
                   {(['Beginner', 'Intermediate', 'Advanced'] as const).map(d => (
                     <button
                       key={d}
                       onClick={() => setSelectedDifficulty(prev => ({ ...prev, [c.id]: d }))}
-                      className={`px-3 py-1 rounded-full text-[10px] font-mono border transition-all ${
+                      className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] font-mono border transition-all ${
                         diff === d ? 'bg-cyan-500/20 border-cyan-400 text-cyan-200' : 'bg-slate-800 border-slate-700 text-slate-500'
                       }`}
                     >
@@ -101,7 +101,7 @@ export default function CaseSelection({ onSelectCase, onBack, bookmarkedCases, o
               </div>
               <button
                 onClick={() => onSelectCase(c.id, diff)}
-                className="mt-6 flex items-center justify-center gap-2 p-3 bg-slate-900/60 rounded-xl text-sm font-semibold text-cyan-300 hover:bg-slate-900 transition-colors"
+                className="mt-5 sm:mt-6 flex items-center justify-center gap-2 p-3 bg-slate-900/60 rounded-xl text-xs sm:text-sm font-semibold text-cyan-300 hover:bg-slate-900 transition-colors"
               >
                 <span>Start {diff} Simulation</span>
                 <ArrowRight size={16} />
@@ -111,10 +111,10 @@ export default function CaseSelection({ onSelectCase, onBack, bookmarkedCases, o
         })}
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mt-6 sm:mt-8 text-center">
         <button
           onClick={onBack}
-          className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-300 text-sm font-medium transition-colors"
+          className="px-5 sm:px-6 py-2 sm:py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-300 text-xs sm:text-sm font-medium transition-colors"
         >
           ← Return to Dashboard
         </button>

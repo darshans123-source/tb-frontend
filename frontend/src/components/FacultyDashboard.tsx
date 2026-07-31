@@ -2,17 +2,17 @@ import { BarChart3, Users, FileText, Download, CheckCircle, AlertTriangle } from
 
 export default function FacultyDashboard() {
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8">
-      <header className="flex justify-between items-center pb-6 border-b border-slate-800">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
         <div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
             Faculty Dashboard
           </h1>
-          <p className="text-slate-400 font-mono">Navodaya Medical College • Department of Microbiology</p>
+          <p className="text-slate-400 text-xs sm:text-sm font-mono">Navodaya Medical College • Department of Microbiology</p>
         </div>
         <button
           onClick={() => alert("Exporting student analytics PDF report...")}
-          className="flex items-center gap-2 px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 rounded-xl text-white font-semibold shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all"
+          className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-cyan-600 hover:bg-cyan-500 rounded-xl text-white font-semibold text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all shrink-0"
         >
           <Download size={18} />
           <span>Export Analytics PDF</span>
@@ -20,51 +20,51 @@ export default function FacultyDashboard() {
       </header>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
           <div className="flex items-center gap-3 text-cyan-400 mb-2">
             <Users size={20} />
             <span className="text-xs uppercase font-mono text-slate-400">Enrolled Students</span>
           </div>
-          <p className="text-3xl font-extbold font-mono">142</p>
+          <p className="text-2xl sm:text-3xl font-extrabold font-mono">142</p>
           <p className="text-xs text-emerald-400 mt-1">↑ 12% active this week</p>
         </div>
 
-        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
+        <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
           <div className="flex items-center gap-3 text-emerald-400 mb-2">
             <CheckCircle size={20} />
             <span className="text-xs uppercase font-mono text-slate-400">Average Accuracy</span>
           </div>
-          <p className="text-3xl font-extbold font-mono">84.2%</p>
+          <p className="text-2xl sm:text-3xl font-extrabold font-mono">84.2%</p>
           <p className="text-xs text-emerald-400 mt-1">Pulmonary & Pediatric</p>
         </div>
 
-        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
+        <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
           <div className="flex items-center gap-3 text-amber-400 mb-2">
             <BarChart3 size={20} />
             <span className="text-xs uppercase font-mono text-slate-400">Cases Completed</span>
           </div>
-          <p className="text-3xl font-extbold font-mono">890</p>
+          <p className="text-2xl sm:text-3xl font-extrabold font-mono">890</p>
           <p className="text-xs text-slate-400 mt-1">Across 4 modules</p>
         </div>
 
-        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
+        <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
           <div className="flex items-center gap-3 text-rose-400 mb-2">
             <AlertTriangle size={20} />
             <span className="text-xs uppercase font-mono text-slate-400">Weak Area Flag</span>
           </div>
-          <p className="text-3xl font-extbold font-mono">MDR-DST</p>
+          <p className="text-2xl sm:text-3xl font-extrabold font-mono">MDR-DST</p>
           <p className="text-xs text-rose-400 mt-1">Requires review in lecture</p>
         </div>
       </div>
 
       {/* Recent Student Submissions Table */}
-      <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-3xl">
-        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+      <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl sm:rounded-3xl">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-4 sm:mb-6 flex items-center gap-2">
           <FileText className="text-cyan-400" /> Student Performance & Weak Topics
         </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left text-xs sm:text-sm min-w-[500px]">
             <thead>
               <tr className="border-b border-slate-800 text-slate-400 font-mono text-xs uppercase">
                 <th className="pb-3">Student Name</th>

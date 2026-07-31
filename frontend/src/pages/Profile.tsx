@@ -25,12 +25,12 @@ export default function Profile({
   const { mode, toggleTheme } = useTheme();
 
   return (
-    <div className="p-6 pb-24 space-y-6 text-white">
-      <div className="text-center pt-4 pb-2">
-        <div className="w-20 h-20 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-3xl mx-auto flex items-center justify-center text-3xl font-black shadow-[0_0_25px_rgba(6,182,212,0.4)] mb-4">
-          {userName.charAt(0)}
+    <div className="p-4 sm:p-6 pb-24 space-y-4 sm:space-y-6 text-white max-w-4xl mx-auto">
+      <div className="text-center pt-2 sm:pt-4 pb-2">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-2xl sm:rounded-3xl mx-auto flex items-center justify-center text-2xl sm:text-3xl font-black shadow-[0_0_25px_rgba(6,182,212,0.4)] mb-3 sm:mb-4">
+          {userName ? userName.charAt(0) : 'S'}
         </div>
-        <h2 className="text-2xl font-bold">{userName}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold">{userName}</h2>
         <p className="text-xs text-slate-400 font-mono mt-1">{userEmail}</p>
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-950/60 border border-cyan-500/30 rounded-full text-cyan-300 text-xs mt-3">
           <Sparkles size={12} /> Level {userLevel} • TB Clinical Resident
@@ -38,21 +38,21 @@ export default function Profile({
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl text-center">
-          <p className="text-xs text-slate-400 uppercase font-mono">Total XP</p>
-          <p className="text-2xl font-bold text-cyan-400 font-mono mt-1">{xp}</p>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-2xl text-center">
+          <p className="text-[10px] sm:text-xs text-slate-400 uppercase font-mono">Total XP</p>
+          <p className="text-xl sm:text-2xl font-bold text-cyan-400 font-mono mt-1">{xp}</p>
         </div>
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl text-center">
-          <p className="text-xs text-slate-400 uppercase font-mono">Daily Streak</p>
-          <p className="text-2xl font-bold text-emerald-400 font-mono mt-1">{streak} Days 🔥</p>
+        <div className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-2xl text-center">
+          <p className="text-[10px] sm:text-xs text-slate-400 uppercase font-mono">Daily Streak</p>
+          <p className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono mt-1">{streak} Days 🔥</p>
         </div>
       </div>
 
       {/* Activity Calendar */}
       <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl">
-        <h3 className="text-sm font-semibold text-slate-300 mb-3">Activity Calendar</h3>
-        <div className="grid grid-cols-7 gap-1">
+        <h3 className="text-xs sm:text-sm font-semibold text-slate-300 mb-3">Activity Calendar</h3>
+        <div className="grid grid-cols-7 gap-1 sm:gap-1.5 justify-items-center">
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => (
             <div key={d} className="text-[10px] text-slate-500 text-center font-mono">
               {d}
@@ -64,7 +64,7 @@ export default function Profile({
             return (
               <div
                 key={day}
-                className={`h-7 w-7 rounded-lg flex items-center justify-center text-[10px] font-mono ${
+                className={`h-6 w-6 sm:h-7 sm:w-7 rounded-lg flex items-center justify-center text-[9px] sm:text-[10px] font-mono ${
                   isActive ? 'bg-cyan-600 text-white shadow-[0_0_10px_rgba(6,182,212,0.5)]' : 'bg-slate-950 text-slate-600'
                 }`}
               >
@@ -78,19 +78,19 @@ export default function Profile({
       {/* Menu Options & Settings */}
       <div className="space-y-3">
         {/* Dark / Light Theme Toggle Option */}
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex items-center justify-between text-sm">
+        <div className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-950 text-amber-400 rounded-xl">
+            <div className="p-2 sm:p-2.5 bg-amber-950 text-amber-400 rounded-xl shrink-0">
               {mode === 'dark' ? <Moon size={18} /> : <Sun size={18} />}
             </div>
             <div>
-              <p className="font-semibold">App Theme Mode</p>
-              <p className="text-xs text-slate-400">Current mode: {mode === 'dark' ? 'Dark Navy (#0B1120)' : 'Clean Light (#FFFFFF)'}</p>
+              <p className="font-semibold text-xs sm:text-sm">App Theme Mode</p>
+              <p className="text-[10px] sm:text-xs text-slate-400">Current mode: {mode === 'dark' ? 'Dark Navy (#0B1120)' : 'Clean Light (#FFFFFF)'}</p>
             </div>
           </div>
           <button
             onClick={toggleTheme}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 font-bold rounded-xl text-xs font-mono border border-slate-700 transition-all"
+            className="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 font-bold rounded-xl text-xs font-mono border border-slate-700 transition-all text-center"
           >
             Switch to {mode === 'dark' ? 'Light' : 'Dark'} Mode
           </button>
@@ -98,38 +98,38 @@ export default function Profile({
 
         <button
           onClick={onOpenProgressReport}
-          className="w-full p-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between text-sm transition-colors"
+          className="w-full p-3.5 sm:p-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between text-xs sm:text-sm transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-emerald-950 text-emerald-400 rounded-xl"><Award size={18} /></div>
-            <span className="font-semibold">Download Clinical Progress Report</span>
+            <div className="p-2 sm:p-2.5 bg-emerald-950 text-emerald-400 rounded-xl shrink-0"><Award size={18} /></div>
+            <span className="font-semibold text-left">Download Clinical Progress Report</span>
           </div>
           <span className="text-slate-500">→</span>
         </button>
 
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex items-center justify-between text-sm">
+        <div className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex items-center justify-between text-xs sm:text-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-cyan-950 text-cyan-400 rounded-xl"><ShieldCheck size={18} /></div>
+            <div className="p-2 sm:p-2.5 bg-cyan-950 text-cyan-400 rounded-xl shrink-0"><ShieldCheck size={18} /></div>
             <div>
               <p className="font-semibold">Badges Earned</p>
-              <p className="text-xs text-slate-400">{badgesCount} Expert Certifications</p>
+              <p className="text-[10px] sm:text-xs text-slate-400">{badgesCount} Expert Certifications</p>
             </div>
           </div>
           <span className="text-cyan-400 font-mono font-bold">{badgesCount}</span>
         </div>
 
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex items-center justify-between text-sm">
+        <div className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-2xl flex items-center justify-between text-xs sm:text-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-purple-950 text-purple-400 rounded-xl"><Bell size={18} /></div>
+            <div className="p-2 sm:p-2.5 bg-purple-950 text-purple-400 rounded-xl shrink-0"><Bell size={18} /></div>
             <span className="font-semibold">Clinical Push Notifications</span>
           </div>
-          <input type="checkbox" defaultChecked className="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0" />
+          <input type="checkbox" defaultChecked className="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0 shrink-0" />
         </div>
       </div>
 
       <button
         onClick={onLogout}
-        className="w-full py-4 bg-rose-950/40 hover:bg-rose-950/60 border border-rose-500/30 text-rose-400 font-bold rounded-2xl flex items-center justify-center gap-2 transition-all mt-6 shadow-[0_0_15px_rgba(244,63,94,0.15)]"
+        className="w-full py-3.5 sm:py-4 bg-rose-950/40 hover:bg-rose-950/60 border border-rose-500/30 text-rose-400 font-bold text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 transition-all mt-4 sm:mt-6 shadow-[0_0_15px_rgba(244,63,94,0.15)]"
       >
         <LogOut size={18} />
         <span>Logout Session</span>

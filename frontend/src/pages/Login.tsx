@@ -59,17 +59,17 @@ export default function Login({ onLogin }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#060913] text-white flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#060913] text-white flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
       {/* Background glowing lung/circuit effects */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-cyan-500/30 rounded-3xl p-8 shadow-[0_0_50px_rgba(6,182,212,0.15)] relative z-10">
-        <div className="text-center mb-6">
-          <div className="inline-flex p-4 bg-cyan-950/60 border border-cyan-500/40 rounded-2xl text-cyan-400 mb-4 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-            <Shield size={36} />
+      <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_0_50px_rgba(6,182,212,0.15)] relative z-10 my-4 max-h-[95vh] overflow-y-auto custom-scrollbar">
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="inline-flex p-3 sm:p-4 bg-cyan-950/60 border border-cyan-500/40 rounded-2xl text-cyan-400 mb-3 sm:mb-4 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+            <Shield size={32} className="sm:w-9 sm:h-9" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 uppercase">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 uppercase">
             {authMode === 'login' ? 'TB Quest Login' : authMode === 'register' ? 'Register Account' : 'Reset Password'}
           </h1>
           <p className="text-slate-400 text-xs mt-1">Gamified Tuberculosis Diagnostic Platform • Supabase OAuth</p>
@@ -77,13 +77,13 @@ export default function Login({ onLogin }: LoginProps) {
 
         {/* Role Selector */}
         {authMode !== 'forgot' && (
-          <div className="grid grid-cols-3 gap-2 mb-6">
+          <div className="grid grid-cols-3 gap-2 mb-4 sm:mb-6">
             {(['student', 'faculty', 'admin'] as UserRole[]).map((r) => (
               <button
                 key={r}
                 type="button"
                 onClick={() => handleRoleSelect(r)}
-                className={`py-2 px-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border ${
+                className={`py-1.5 sm:py-2 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-semibold uppercase tracking-wider transition-all border ${
                   role === r
                     ? 'bg-cyan-600 border-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                     : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800'
@@ -111,10 +111,10 @@ export default function Login({ onLogin }: LoginProps) {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
           {authMode === 'register' && (
             <div>
-              <label className="block text-xs uppercase font-mono text-slate-400 mb-2">Display Name</label>
+              <label className="block text-xs uppercase font-mono text-slate-400 mb-1.5">Display Name</label>
               <div className="relative">
                 <UserIcon className="absolute left-3.5 top-3.5 text-slate-500" size={18} />
                 <input
@@ -122,7 +122,7 @@ export default function Login({ onLogin }: LoginProps) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Dr. Full Name"
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
+                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
                   required
                 />
               </div>
@@ -130,7 +130,7 @@ export default function Login({ onLogin }: LoginProps) {
           )}
 
           <div>
-            <label className="block text-xs uppercase font-mono text-slate-400 mb-2">Email Address</label>
+            <label className="block text-xs uppercase font-mono text-slate-400 mb-1.5">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3.5 top-3.5 text-slate-500" size={18} />
               <input
@@ -138,7 +138,7 @@ export default function Login({ onLogin }: LoginProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@institution.edu"
-                className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
+                className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
                 required
               />
             </div>
@@ -146,7 +146,7 @@ export default function Login({ onLogin }: LoginProps) {
 
           {authMode !== 'forgot' && (
             <div>
-              <label className="block text-xs uppercase font-mono text-slate-400 mb-2">Password</label>
+              <label className="block text-xs uppercase font-mono text-slate-400 mb-1.5">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-3.5 text-slate-500" size={18} />
                 <input
@@ -154,7 +154,7 @@ export default function Login({ onLogin }: LoginProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
+                  className="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-11 pr-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-xs"
                   required
                 />
               </div>
@@ -170,7 +170,7 @@ export default function Login({ onLogin }: LoginProps) {
               <button
                 type="button"
                 onClick={() => { setAuthMode('forgot'); setErrorMsg(null); setSuccessMsg(null); }}
-                className="hover:text-cyan-400 transition-colors"
+                className="hover:text-cyan-400 transition-colors text-[11px] sm:text-xs"
               >
                 Forgot Password?
               </button>
@@ -180,7 +180,7 @@ export default function Login({ onLogin }: LoginProps) {
           <button
             type="submit"
             disabled={isLoading || isGoogleLoading}
-            className="w-full py-4 mt-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 transition-all transform active:scale-[0.99] disabled:opacity-50"
+            className="w-full py-3.5 sm:py-4 mt-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 transition-all transform active:scale-[0.99] disabled:opacity-50"
           >
             <span>
               {isLoading
@@ -197,7 +197,7 @@ export default function Login({ onLogin }: LoginProps) {
 
         {/* Divider */}
         {authMode !== 'forgot' && (
-          <div className="my-5 flex items-center gap-3 text-xs text-slate-500 font-mono">
+          <div className="my-4 sm:my-5 flex items-center gap-3 text-xs text-slate-500 font-mono">
             <div className="flex-1 h-px bg-slate-800"></div>
             <span>OR</span>
             <div className="flex-1 h-px bg-slate-800"></div>
@@ -210,7 +210,7 @@ export default function Login({ onLogin }: LoginProps) {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isGoogleLoading || isLoading}
-            className="w-full py-3.5 bg-slate-950 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 rounded-xl text-white font-semibold text-xs flex items-center justify-center gap-3 shadow-lg transition-all transform active:scale-[0.99] disabled:opacity-50"
+            className="w-full py-3 sm:py-3.5 bg-slate-950 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 rounded-xl text-white font-semibold text-xs flex items-center justify-center gap-3 shadow-lg transition-all transform active:scale-[0.99] disabled:opacity-50"
           >
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
               <path
@@ -235,7 +235,7 @@ export default function Login({ onLogin }: LoginProps) {
         )}
 
         {/* Mode Switch Footers */}
-        <div className="mt-6 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-400 flex justify-between items-center">
+        <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-800/80 text-center text-xs text-slate-400 flex justify-between items-center">
           {authMode === 'login' ? (
             <>
               <span>Need an account?</span>
@@ -261,8 +261,8 @@ export default function Login({ onLogin }: LoginProps) {
           )}
         </div>
 
-        <div className="mt-4 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1 font-mono">
-          <Sparkles size={12} className="text-cyan-400" />
+        <div className="mt-3 sm:mt-4 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1 font-mono">
+          <Sparkles size={12} className="text-cyan-400 shrink-0" />
           <span>Navodaya Institute of Technology • Raichur</span>
         </div>
       </div>

@@ -205,31 +205,31 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-24 right-6 z-50 bg-emerald-950 border border-emerald-500 text-emerald-100 px-4 py-3 rounded-2xl shadow-xl font-mono text-xs flex items-center gap-2"
+            className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 bg-emerald-950 border border-emerald-500 text-emerald-100 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl shadow-xl font-mono text-xs flex items-center gap-2 max-w-[90vw]"
           >
-            <CheckCircle2 size={16} className="text-emerald-400" />
+            <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
             <span>{toastMessage}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Floating Voice Assistant Controls (Bottom Right) */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 print:hidden">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 sm:gap-3 print:hidden">
         {/* Active Speech Control Mini Toolbar */}
         {isPlaying && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2 p-2 bg-slate-900 border border-cyan-500/40 rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.2)] text-white text-xs"
+            className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-slate-900 border border-cyan-500/40 rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.2)] text-white text-xs"
           >
-            <button onClick={handlePauseResume} className="p-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-cyan-400">
-              {isPaused ? <Play size={16} /> : <Pause size={16} />}
+            <button onClick={handlePauseResume} className="p-1.5 sm:p-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-cyan-400">
+              {isPaused ? <Play size={14} className="sm:w-4 sm:h-4" /> : <Pause size={14} className="sm:w-4 sm:h-4" />}
             </button>
-            <button onClick={handleStopSpeech} className="p-2 bg-slate-800 hover:bg-rose-950/80 rounded-xl text-rose-400">
-              <Square size={16} />
+            <button onClick={handleStopSpeech} className="p-1.5 sm:p-2 bg-slate-800 hover:bg-rose-950/80 rounded-xl text-rose-400">
+              <Square size={14} className="sm:w-4 sm:h-4" />
             </button>
-            <span className="text-[11px] font-mono text-cyan-300 pr-2">
-              {isPaused ? 'Paused' : 'Reading Aloud...'}
+            <span className="text-[10px] sm:text-[11px] font-mono text-cyan-300 pr-1.5 sm:pr-2">
+              {isPaused ? 'Paused' : 'Reading...'}
             </span>
           </motion.div>
         )}
@@ -237,16 +237,16 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
         {/* Floating Settings Trigger */}
         <button
           onClick={() => setShowSettings(true)}
-          className="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl text-slate-300 hover:text-white shadow-lg transition-all"
+          className="p-3 sm:p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl text-slate-300 hover:text-white shadow-lg transition-all"
           title="Voice & Speech Settings"
         >
-          <Settings size={20} />
+          <Settings size={18} className="sm:w-5 sm:h-5" />
         </button>
 
         {/* Primary Floating Microphone Button */}
         <button
           onClick={toggleListening}
-          className={`p-4 rounded-2xl border font-bold text-white transition-all flex items-center justify-center relative group shadow-[0_0_30px_rgba(6,182,212,0.3)] ${
+          className={`p-3.5 sm:p-4 rounded-2xl border font-bold text-white transition-all flex items-center justify-center relative group shadow-[0_0_30px_rgba(6,182,212,0.3)] ${
             isListening
               ? 'bg-gradient-to-r from-rose-500 to-red-600 border-rose-400 animate-pulse ring-4 ring-rose-500/40'
               : 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-400 hover:scale-105'
@@ -255,11 +255,11 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
         >
           {isListening ? (
             <div className="flex items-center gap-2">
-              <MicOff size={22} />
-              <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+              <MicOff size={20} className="sm:w-5 sm:h-5" />
+              <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white animate-ping"></span>
             </div>
           ) : (
-            <Mic size={22} />
+            <Mic size={20} className="sm:w-5 sm:h-5" />
           )}
         </button>
       </div>
@@ -271,13 +271,13 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-950/90 border border-cyan-500/50 p-4 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.3)] text-white text-center max-w-md w-full backdrop-blur-md"
+            className="fixed top-16 sm:top-20 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 z-50 bg-slate-950/90 border border-cyan-500/50 p-3 sm:p-4 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.3)] text-white text-center max-w-md w-auto sm:w-full backdrop-blur-md"
           >
-            <div className="flex items-center justify-center gap-2 text-cyan-400 font-mono text-xs mb-1">
+            <div className="flex items-center justify-center gap-2 text-cyan-400 font-mono text-[10px] sm:text-xs mb-1">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
               <span>Listening for Voice Commands... (Press Alt+V to stop)</span>
             </div>
-            <p className="text-sm font-semibold text-white italic">
+            <p className="text-xs sm:text-sm font-semibold text-white italic">
               "{transcript || 'Speak command (e.g. "Open Modules", "Start Quiz", "Go Home")...'}"
             </p>
           </motion.div>
@@ -286,14 +286,14 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
 
       {/* Voice Settings Modal */}
       {showSettings && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-cyan-500/40 w-full max-w-md rounded-3xl p-6 text-white space-y-5 shadow-[0_0_40px_rgba(6,182,212,0.2)]">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-cyan-500/40 w-full max-w-md max-h-[90vh] overflow-y-auto custom-scrollbar rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white space-y-4 sm:space-y-5 shadow-[0_0_40px_rgba(6,182,212,0.2)]">
             <div className="flex justify-between items-center pb-3 border-b border-slate-800">
-              <h3 className="text-lg font-bold flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-bold flex items-center gap-2">
                 <Volume2 className="text-cyan-400" /> Voice Assistant Settings
               </h3>
               <button onClick={() => setShowSettings(false)} className="p-1.5 text-slate-400 hover:text-white rounded-lg">
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
@@ -304,7 +304,7 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
               </div>
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-3.5 sm:space-y-4">
               {/* Language Selection */}
               <div>
                 <label className="text-xs font-mono text-slate-400 block mb-1.5">Narration Language / Accent:</label>
@@ -315,7 +315,7 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
                     setLang(newLang);
                     voiceService.updateSettings({ lang: newLang });
                   }}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 sm:p-3 text-xs text-white focus:outline-none focus:border-cyan-500"
                 >
                   <option value="en-IN">English (India)</option>
                   <option value="en-US">English (US)</option>
@@ -339,7 +339,7 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
                       setSelectedVoiceURI(uri);
                       voiceService.updateSettings({ voiceURI: uri });
                     }}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500 truncate"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 sm:p-3 text-xs text-white focus:outline-none focus:border-cyan-500 truncate"
                   >
                     <option value="">Auto-Detect Best Voice</option>
                     {availableVoices.map((v) => (
@@ -427,13 +427,13 @@ export default function VoiceAssistant({ onNavigate }: VoiceAssistantProps) {
             <div className="grid grid-cols-2 gap-3 pt-2">
               <button
                 onClick={handleTestVoice}
-                className="py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all"
+                className="py-2.5 sm:py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all"
               >
                 <Play size={14} /> Test Voice
               </button>
               <button
                 onClick={handleSaveSettings}
-                className="py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl text-xs shadow-md transition-all"
+                className="py-2.5 sm:py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl text-xs shadow-md transition-all"
               >
                 Save Settings
               </button>

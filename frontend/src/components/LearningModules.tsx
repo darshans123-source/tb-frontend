@@ -85,7 +85,7 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
   // Detailed Comprehensive Learning Page
   if (selectedModule) {
     return (
-      <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 text-white">
+      <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8 text-white">
         {/* Back navigation button */}
         <Button
           startIcon={<ArrowLeft size={18} />}
@@ -97,35 +97,35 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
         </Button>
 
         {/* Header Hero Banner */}
-        <Paper className="p-8 bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border border-cyan-500/40 rounded-3xl space-y-4">
+        <Paper className="p-4 sm:p-8 bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border border-cyan-500/40 rounded-2xl sm:rounded-3xl space-y-4">
           <div className="flex justify-between items-start flex-wrap gap-4">
             <div>
               <Chip label="CDC & NTEP Certified Content" color="primary" size="small" className="mb-2 font-mono" />
-              <Typography variant="h3" className="font-bold text-white mb-2">
+              <Typography variant="h3" className="font-bold text-white mb-2 text-2xl sm:text-4xl">
                 {selectedModule.title}
               </Typography>
-              <Typography variant="body1" className="text-slate-300 max-w-3xl">
+              <Typography variant="body1" className="text-slate-300 max-w-3xl text-xs sm:text-base">
                 {selectedModule.overview}
               </Typography>
             </div>
-            <div className="bg-slate-950/80 p-4 rounded-2xl border border-cyan-500/30 text-center font-mono">
+            <div className="bg-slate-950/80 p-4 rounded-2xl border border-cyan-500/30 text-center font-mono w-full sm:w-auto">
               <Typography variant="caption" className="text-slate-400 uppercase">Module Progress</Typography>
               <Typography variant="h5" className="text-cyan-400 font-bold">{progress}%</Typography>
-              <LinearProgress variant="determinate" value={progress} className="mt-2 rounded-full h-2 w-32" />
+              <LinearProgress variant="determinate" value={progress} className="mt-2 rounded-full h-2 w-full sm:w-32" />
             </div>
           </div>
         </Paper>
 
         {/* Detailed Content Grid */}
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           {/* Main Content Column */}
-          <Grid size={{ xs: 12, lg: 8 }} className="space-y-6">
+          <Grid size={{ xs: 12, lg: 8 }} className="space-y-4 sm:space-y-6">
             {/* Learning Objectives */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6">
-              <Typography variant="h6" className="font-bold text-cyan-400 mb-3 flex items-center gap-2">
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6">
+              <Typography variant="h6" className="font-bold text-cyan-400 mb-3 flex items-center gap-2 text-base sm:text-lg">
                 <Sparkles size={20} /> Learning Objectives
               </Typography>
-              <ul className="space-y-2 text-slate-300 text-sm">
+              <ul className="space-y-2 text-slate-300 text-xs sm:text-sm">
                 {selectedModule.learningObjectives.map((obj, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle2 size={16} className="text-emerald-400 mt-0.5 shrink-0" />
@@ -136,23 +136,23 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Introduction */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-white">Introduction</Typography>
-              <Typography variant="body2" className="text-slate-300 leading-relaxed">{selectedModule.introduction}</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Introduction</Typography>
+              <Typography variant="body2" className="text-slate-300 leading-relaxed text-xs sm:text-sm">{selectedModule.introduction}</Typography>
             </Card>
 
             {/* Epidemiology & Causes */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-white">Epidemiology & Etiology</Typography>
-              <Typography variant="body2" className="text-slate-300 leading-relaxed">{selectedModule.epidemiology}</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Epidemiology & Etiology</Typography>
+              <Typography variant="body2" className="text-slate-300 leading-relaxed text-xs sm:text-sm">{selectedModule.epidemiology}</Typography>
               <Divider className="bg-slate-800" />
               <Typography variant="subtitle2" className="font-bold text-cyan-400">Microbiological Cause (Causative Agent):</Typography>
-              <Typography variant="body2" className="text-slate-300">{selectedModule.causes}</Typography>
+              <Typography variant="body2" className="text-slate-300 text-xs sm:text-sm">{selectedModule.causes}</Typography>
             </Card>
 
             {/* Risk Factors */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-amber-400">Risk Factors & High-Risk Stratification</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-amber-400 text-base sm:text-lg">Risk Factors & High-Risk Stratification</Typography>
               <Grid container spacing={2}>
                 {selectedModule.riskFactors.map((rf, i) => (
                   <Grid size={{ xs: 12, sm: 6 }} key={i}>
@@ -166,8 +166,8 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Signs & Symptoms */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-white">Signs & Symptoms</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Signs & Symptoms</Typography>
               
               <Typography variant="subtitle2" className="text-cyan-400 font-bold">1. Pulmonary TB Manifestations:</Typography>
               <ul className="space-y-1.5 text-slate-300 text-xs pl-4 list-disc">
@@ -186,13 +186,13 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Diagnostic Approach & Lab Investigations */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-white">Diagnostic Approach & Laboratory Investigations</Typography>
-              <Typography variant="body2" className="text-slate-300">{selectedModule.diagnosticApproach}</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Diagnostic Approach & Laboratory Investigations</Typography>
+              <Typography variant="body2" className="text-slate-300 text-xs sm:text-sm">{selectedModule.diagnosticApproach}</Typography>
 
               <div className="space-y-3 mt-4">
                 {selectedModule.laboratoryInvestigations.map((lab, i) => (
-                  <Paper key={i} className="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-1">
+                  <Paper key={i} className="p-3 sm:p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-1">
                     <Typography variant="subtitle2" className="font-bold text-cyan-400">{lab.name}</Typography>
                     <Typography variant="body2" className="text-slate-300 text-xs">{lab.description}</Typography>
                     <Typography variant="caption" className="text-emerald-400 font-mono block">Interpretation: {lab.interpretation}</Typography>
@@ -202,8 +202,8 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Imaging Findings & Differential Diagnosis */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-white">Chest Imaging & Differential Diagnosis</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Chest Imaging & Differential Diagnosis</Typography>
               
               <Typography variant="subtitle2" className="text-indigo-400 font-bold">Chest Radiograph (CXR) Key Findings:</Typography>
               <ul className="space-y-1 text-slate-300 text-xs pl-4 list-disc">
@@ -219,13 +219,13 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Treatment & Drug Regimens */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-emerald-400">Treatment & Recommended Drug Regimens</Typography>
-              <Typography variant="body2" className="text-slate-300">{selectedModule.treatment}</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-emerald-400 text-base sm:text-lg">Treatment & Recommended Drug Regimens</Typography>
+              <Typography variant="body2" className="text-slate-300 text-xs sm:text-sm">{selectedModule.treatment}</Typography>
 
               <div className="space-y-3 mt-3">
                 {selectedModule.drugRegimens.map((reg, i) => (
-                  <Paper key={i} className="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-1 font-mono text-xs">
+                  <Paper key={i} className="p-3 sm:p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-1 font-mono text-xs">
                     <Typography variant="subtitle2" className="font-bold text-emerald-400">{reg.regimen}</Typography>
                     <Typography variant="body2" className="text-cyan-300">Drugs: {reg.drugs}</Typography>
                     <Typography variant="caption" className="text-slate-400 block">Duration: {reg.duration} | Note: {reg.notes}</Typography>
@@ -235,8 +235,8 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Follow-up & Infection Control */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-white">Follow-up Care & Airborne Infection Control</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-white text-base sm:text-lg">Follow-up Care & Airborne Infection Control</Typography>
               <Typography variant="body2" className="text-slate-300 text-xs">{selectedModule.followUp}</Typography>
 
               <Typography variant="subtitle2" className="text-amber-400 font-bold mt-2">Infection Control Standards:</Typography>
@@ -246,16 +246,16 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Interactive Embedded Flowchart */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-amber-400 flex items-center gap-2">
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-amber-400 flex items-center gap-2 text-base sm:text-lg">
                 <FileText size={20} /> Interactive Diagnostic Flowchart
               </Typography>
               <AlgorithmFlowchart interactiveMode={true} />
             </Card>
 
             {/* Case-Based Learning */}
-            <Card className="bg-slate-900 border border-cyan-500/40 text-white rounded-2xl p-6 space-y-4">
-              <Typography variant="h6" className="font-bold text-cyan-300 flex items-center gap-2">
+            <Card className="bg-slate-900 border border-cyan-500/40 text-white rounded-2xl p-4 sm:p-6 space-y-4">
+              <Typography variant="h6" className="font-bold text-cyan-300 flex items-center gap-2 text-base sm:text-lg">
                 <Brain size={20} /> Clinical Case-Based Scenario
               </Typography>
               <Typography variant="subtitle2" className="font-bold text-white">{selectedModule.caseScenario.patient}</Typography>
@@ -273,8 +273,8 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Interactive Quiz with Explanations */}
-            <Card className="bg-slate-900 border border-purple-500/40 text-white rounded-2xl p-6 space-y-6">
-              <Typography variant="h6" className="font-bold text-purple-400 flex items-center gap-2">
+            <Card className="bg-slate-900 border border-purple-500/40 text-white rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-6">
+              <Typography variant="h6" className="font-bold text-purple-400 flex items-center gap-2 text-base sm:text-lg">
                 <HelpCircle size={20} /> Interactive Self-Assessment Quiz
               </Typography>
 
@@ -283,7 +283,7 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
                 const showFeedback = showQuizFeedback[qIdx];
 
                 return (
-                  <div key={qIdx} className="space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
+                  <div key={qIdx} className="space-y-3 p-3.5 sm:p-4 bg-slate-950 rounded-xl border border-slate-800">
                     <Typography variant="subtitle2" className="font-bold text-white text-xs">
                       Q{qIdx + 1}: {q.question}
                     </Typography>
@@ -297,7 +297,7 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
                           <button
                             key={oIdx}
                             onClick={() => handleAnswerSelect(qIdx, oIdx)}
-                            className={`w-full p-3 text-left rounded-xl border text-xs transition-all ${
+                            className={`w-full p-2.5 sm:p-3 text-left rounded-xl border text-xs transition-all ${
                               showFeedback && isChosen
                                 ? isCorrect
                                   ? 'bg-emerald-950 border-emerald-500 text-emerald-200 font-bold'
@@ -323,10 +323,10 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
           </Grid>
 
           {/* Right Sidebar Column */}
-          <Grid size={{ xs: 12, lg: 4 }} className="space-y-6">
+          <Grid size={{ xs: 12, lg: 4 }} className="space-y-4 sm:space-y-6">
             {/* Clinical Pearls */}
-            <Card className="bg-slate-900 border border-amber-500/40 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-amber-400 flex items-center gap-2">
+            <Card className="bg-slate-900 border border-amber-500/40 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-amber-400 flex items-center gap-2 text-base sm:text-lg">
                 <Sparkles size={20} /> High-Yield Clinical Pearls
               </Typography>
               <ul className="space-y-2 text-slate-200 text-xs">
@@ -339,8 +339,8 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* Key Takeaways */}
-            <Card className="bg-slate-900 border border-emerald-500/40 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-emerald-400">Key Takeaways</Typography>
+            <Card className="bg-slate-900 border border-emerald-500/40 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-emerald-400 text-base sm:text-lg">Key Takeaways</Typography>
               <ul className="space-y-2 text-slate-200 text-xs">
                 {selectedModule.keyTakeaways.map((kt, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -352,16 +352,16 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
             </Card>
 
             {/* WHO / CDC Summary */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-cyan-400">WHO / CDC Guideline Summary</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-cyan-400 text-base sm:text-lg">WHO / CDC Guideline Summary</Typography>
               <Typography variant="body2" className="text-slate-300 text-xs leading-relaxed">
                 {selectedModule.guidelineSummary}
               </Typography>
             </Card>
 
             {/* References */}
-            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-6 space-y-3">
-              <Typography variant="h6" className="font-bold text-slate-400">References & Guidelines</Typography>
+            <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl p-4 sm:p-6 space-y-3">
+              <Typography variant="h6" className="font-bold text-slate-400 text-base sm:text-lg">References & Guidelines</Typography>
               <ul className="space-y-1.5 text-slate-400 text-[11px] font-mono list-disc pl-4">
                 {selectedModule.references.map((ref, i) => <li key={i}>{ref}</li>)}
               </ul>
@@ -374,20 +374,20 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
 
   // Original UI Grid layout preserved exactly as before
   return (
-    <div className="p-8">
-      <Typography variant="h4" className="text-white mb-8 font-bold">Learning Modules</Typography>
+    <div className="p-4 sm:p-6 md:p-8">
+      <Typography variant="h4" className="text-white mb-6 sm:mb-8 font-bold text-2xl sm:text-4xl">Learning Modules</Typography>
       <Grid container spacing={3}>
         {modules.map((module, idx) => (
           <Grid size={{ xs: 12, md: 6, lg: 4 }} key={`${module.title}_${idx}`}>
             <Card className="bg-slate-900 border border-slate-800 text-white rounded-2xl hover:border-cyan-500/50 transition-all cursor-pointer">
               <CardContent>
                 <div
-                  className="flex items-center justify-between mb-4"
+                  className="flex items-center justify-between mb-4 flex-wrap gap-2"
                   onClick={() => handleOpenModule(module.id)}
                 >
                   <div className="flex items-center gap-3">
                     <module.icon className="text-cyan-400" size={24} />
-                    <Typography variant="h6" className="font-bold">{module.title}</Typography>
+                    <Typography variant="h6" className="font-bold text-base sm:text-lg">{module.title}</Typography>
                   </div>
                   <Chip label="Open Module" size="small" color="primary" onClick={() => handleOpenModule(module.id)} />
                 </div>
@@ -395,7 +395,7 @@ export default function LearningModules({ currentUserId }: LearningModulesProps)
                 {module.sub.map((sub) => (
                   <Accordion key={sub} className="bg-slate-950 border border-slate-800 text-slate-300 shadow-none">
                     <AccordionSummary expandIcon={<ExpandMoreIcon className="text-slate-500" />}>
-                      <Typography className="text-sm">{sub}</Typography>
+                      <Typography className="text-xs sm:text-sm">{sub}</Typography>
                     </AccordionSummary>
                     <AccordionDetails className="space-y-2">
                       <Typography variant="body2" className="text-slate-400 text-xs">

@@ -19,13 +19,17 @@ export default function Analytics() {
   useEffect(() => {
     if (!svgRef.current) return;
 
-    const margin = { top: 30, right: 30, bottom: 30, left: 100 };
+    // Clear previous SVG contents
+    d3.select(svgRef.current).selectAll('*').remove();
+
+    const margin = { top: 30, right: 30, bottom: 30, left: 110 };
     const width = 600 - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
+    const height = 280 - margin.top - margin.bottom;
 
     const svg = d3.select(svgRef.current)
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
+      .attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+      .attr('width', '100%')
+      .attr('height', '100%')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -57,9 +61,13 @@ export default function Analytics() {
   }, []);
 
   return (
-    <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-2xl">
-      <h2 className="text-xl font-bold text-white mb-6">Diagnostic Success Heatmap</h2>
-      <svg ref={svgRef}></svg>
+    <div className="p-4 sm:p-6 bg-slate-900/50 border border-slate-800 rounded-2xl w-full max-w-full overflow-hidden">
+      <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Diagnostic Success Heatmap</h2>
+      <div className="w-full overflow-x-auto custom-scrollbar">
+        <div className="min-w-[480px]">
+          <svg ref={svgRef}></svg>
+        </div>
+      </div>
     </div>
   );
 }

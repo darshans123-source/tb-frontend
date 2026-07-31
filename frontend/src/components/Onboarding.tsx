@@ -45,15 +45,15 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#060913] text-white flex flex-col justify-between p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#060913] text-white flex flex-col justify-between p-4 sm:p-6 relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-80 h-80 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 sm:w-80 h-64 sm:h-80 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Top Bar */}
       <div className="flex justify-between items-center z-10">
         <div className="flex items-center gap-2">
-          <Shield className="text-cyan-400" size={24} />
-          <span className="font-bold tracking-wider text-sm">TB QUEST</span>
+          <Shield className="text-cyan-400" size={22} />
+          <span className="font-bold tracking-wider text-xs sm:text-sm">TB QUEST</span>
         </div>
         <button
           onClick={() => {
@@ -67,7 +67,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       </div>
 
       {/* Slide Content */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-4 z-10">
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4 z-10 my-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -75,18 +75,18 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col items-center space-y-6 max-w-sm"
+            className="flex flex-col items-center space-y-4 sm:space-y-6 max-w-sm"
           >
-            <div className={`p-6 rounded-3xl border shadow-xl ${currentSlide.color}`}>
-              <Icon size={56} />
+            <div className={`p-4 sm:p-6 rounded-3xl border shadow-xl ${currentSlide.color}`}>
+              <Icon size={48} className="sm:w-14 sm:h-14" />
             </div>
-            <h2 className="text-2xl font-bold tracking-wide">{currentSlide.title}</h2>
-            <p className="text-slate-400 text-sm leading-relaxed">{currentSlide.desc}</p>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-wide">{currentSlide.title}</h2>
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">{currentSlide.desc}</p>
           </motion.div>
         </AnimatePresence>
 
         {/* Indicators */}
-        <div className="flex gap-2 mt-8">
+        <div className="flex gap-2 mt-6 sm:mt-8">
           {slides.map((_, i) => (
             <div
               key={i}
@@ -99,10 +99,10 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       </div>
 
       {/* Footer Button */}
-      <div className="z-15 pb-4">
+      <div className="z-10 pb-2 sm:pb-4">
         <button
           onClick={handleNext}
-          className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
+          className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
         >
           <span>{step === slides.length - 1 ? 'Get Started' : 'Next'}</span>
           <ArrowRight size={18} />
