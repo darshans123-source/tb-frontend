@@ -8,7 +8,7 @@ export default function FacultyDashboard() {
           <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
             Faculty Dashboard
           </h1>
-          <p className="text-slate-400 text-xs sm:text-sm font-mono">Navodaya Medical College • Department of Microbiology</p>
+          <p className="text-slate-400 text-xs sm:text-sm font-mono">Skill Development Center • NIT Raichur</p>
         </div>
         <button
           onClick={() => alert("Exporting student analytics PDF report...")}
@@ -55,6 +55,36 @@ export default function FacultyDashboard() {
           </div>
           <p className="text-2xl sm:text-3xl font-extrabold font-mono">MDR-DST</p>
           <p className="text-xs text-rose-400 mt-1">Requires review in lecture</p>
+        </div>
+      </div>
+
+      {/* Algorithm Pathway Analytics Section */}
+      <div className="p-4 sm:p-6 bg-slate-900/80 border border-slate-800 rounded-2xl sm:rounded-3xl space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <BarChart3 className="text-cyan-400" /> Pulmonary TB Algorithm Pathway Performance
+          </h3>
+          <span className="text-xs text-cyan-400 font-mono">Real-time NTEP Guideline Monitor</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+            <span className="text-xs font-mono uppercase text-slate-400">Correct Pathway Execution</span>
+            <p className="text-2xl font-black text-emerald-400">89.2%</p>
+            <p className="text-xs text-slate-400">127/142 students correctly identified CBNAAT requirement</p>
+          </div>
+
+          <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+            <span className="text-xs font-mono uppercase text-slate-400">Wrong Pathway Rate</span>
+            <p className="text-2xl font-black text-rose-400">10.8%</p>
+            <p className="text-xs text-slate-400">Most frequent error: Starting empirical ATT without molecular test</p>
+          </div>
+
+          <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+            <span className="text-xs font-mono uppercase text-slate-400">Average Decision Velocity</span>
+            <p className="text-2xl font-black text-cyan-400">14.2 sec</p>
+            <p className="text-xs text-slate-400">Average time spent per decision node</p>
+          </div>
         </div>
       </div>
 

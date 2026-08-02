@@ -66,8 +66,8 @@ export default function Login({ onLogin }: LoginProps) {
 
       <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_0_50px_rgba(6,182,212,0.15)] relative z-10 my-4 max-h-[95vh] overflow-y-auto custom-scrollbar">
         <div className="text-center mb-4 sm:mb-6">
-          <div className="inline-flex p-3 sm:p-4 bg-cyan-950/60 border border-cyan-500/40 rounded-2xl text-cyan-400 mb-3 sm:mb-4 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-            <Shield size={32} className="sm:w-9 sm:h-9" />
+          <div className="inline-flex p-2.5 sm:p-3 bg-white/10 backdrop-blur-md border border-cyan-500/30 rounded-2xl mb-3 sm:mb-4 shadow-[0_0_25px_rgba(6,182,212,0.25)]">
+            <img src="/nit_logo.png" alt="Navodaya Institute of Technology Logo" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 uppercase">
             {authMode === 'login' ? 'TB Quest Login' : authMode === 'register' ? 'Register Account' : 'Reset Password'}
@@ -263,7 +263,7 @@ export default function Login({ onLogin }: LoginProps) {
 
         <div className="mt-3 sm:mt-4 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1 font-mono">
           <Sparkles size={12} className="text-cyan-400 shrink-0" />
-          <span>Navodaya Institute of Technology • Raichur</span>
+          <span>Skill Development Center • NIT Raichur</span>
         </div>
       </div>
     </div>

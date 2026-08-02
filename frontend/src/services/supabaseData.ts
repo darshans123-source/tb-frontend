@@ -86,7 +86,7 @@ class SupabaseDataService {
         xp: item.xp || 0,
         badges: Math.floor((item.completed_cases || 0) / 3),
         accuracy: item.accuracy || 0,
-        institution: 'Navodaya Medical College'
+        institution: 'Skill Development Center, NIT Raichur'
       }));
     } catch (e) {
       return [];

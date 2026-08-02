@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { UserRole, CaseType, LeaderboardEntry, CertificateData } from './types';
 import SplashScreen from './components/SplashScreen';
 import Onboarding from './components/Onboarding';
@@ -7,22 +7,25 @@ import StudentDashboard from './components/StudentDashboard';
 import CaseSelection from './components/CaseSelection';
 import CaseEngine from './components/CaseEngine';
 import AlgorithmFlowchart from './components/AlgorithmFlowchart';
-import FacultyDashboard from './components/FacultyDashboard';
-import AdminDashboard from './components/AdminDashboard';
 import AITutor from './components/AITutor';
-import LeaderboardModal from './components/LeaderboardModal';
-import ProgressReportModal from './components/ProgressReportModal';
-import CertificateModal from './components/CertificateModal';
 import AudioSettingsModal from './components/AudioSettingsModal';
 import DashboardLayout from './layouts/DashboardLayout';
 import Profile from './pages/Profile';
 import LevelUpCelebration from './components/LevelUpCelebration';
-import LearningModules from './components/LearningModules';
-import Analytics from './components/Analytics';
 import VoiceAssistant from './components/VoiceAssistant';
+import SkeletonLoader from './components/SkeletonLoader';
 import { authService } from './services/authService';
 import { supabaseData } from './services/supabaseData';
 import { supabase } from './services/supabase';
+
+// Lazy loaded enterprise sub-modules
+const FacultyDashboard = lazy(() => import('./components/FacultyDashboard'));
+const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
+const LearningModules = lazy(() => import('./components/LearningModules'));
+const Analytics = lazy(() => import('./components/Analytics'));
+const LeaderboardModal = lazy(() => import('./components/LeaderboardModal'));
+const ProgressReportModal = lazy(() => import('./components/ProgressReportModal'));
+const CertificateModal = lazy(() => import('./components/CertificateModal'));
 
 export default function App() {
   const [appStage, setAppStage] = useState<'splash' | 'onboarding' | 'login' | 'app'>('splash');
@@ -221,16 +224,26 @@ export default function App() {
   const certificateData: CertificateData = {
     studentName: userData.name || 'Student Doctor',
     issueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-    certificateId: `NMC-TBQ-${Math.floor(100000 + Math.random() * 900000)}`,
+    certificateId: `NIT-TBQ-${Math.floor(100000 + Math.random() * 900000)}`,
     totalXp: userData.xp,
     casesMastered: userData.completedCases,
     accuracy: userData.accuracy,
-    institution: 'Navodaya Medical College, Raichur'
+    institution: 'Skill Development Center, NIT Raichur'
   };
 
-  // Render Splash or Onboarding
+  // Render Splash Screen (Always 4 seconds on initial load or refresh)
   if (appStage === 'splash') {
-    return <SplashScreen onFinish={() => setAppStage('onboarding')} />;
+    return (
+      <SplashScreen
+        onFinish={() => {
+          if (isAuthenticated) {
+            setAppStage('app');
+          } else {
+            setAppStage('login');
+          }
+        }}
+      />
+    );
   }
 
   if (appStage === 'onboarding') {
@@ -248,117 +261,120 @@ export default function App() {
       userData={userData} 
       onLogout={handleLogout}
     >
-      {userRole === 'faculty' ? (
-        <FacultyDashboard />
-      ) : userRole === 'admin' ? (
-        <AdminDashboard />
-      ) : (
-        <>
-          {subView === 'case-engine' ? (
-            <CaseEngine
-              caseType={selectedCaseType}
-              onFinishCase={handleFinishCase}
-              onBack={() => setSubView('none')}
-            />
-          ) : subView === 'case-select' ? (
-            <CaseSelection
-              onSelectCase={(type) => {
-                setSelectedCaseType(type);
-                setSubView('case-engine');
-              }}
-              onBack={() => setSubView('none')}
-              bookmarkedCases={bookmarkedCases}
-              onToggleBookmark={toggleBookmark}
-            />
-          ) : (
-            <>
-              {currentTab === 'dashboard' && (
-                <StudentDashboard
-                  onStartCase={() => setSubView('case-select')}
-                  onOpenAITutor={() => setCurrentTab('ai-tutor')}
-                  onOpenLeaderboard={() => setCurrentTab('leaderboard')}
-                  onOpenProgressReport={() => setShowProgressReport(true)}
-                  onOpenAudioSettings={() => setShowAudioSettings(true)}
-                  userName={userData.name}
-                  userLevel={userData.level}
-                  userProgress={Math.min(100, Math.round((userData.completedCases / 10) * 100))}
-                  xp={userData.xp}
-                  badgesCount={badges.length}
-                  streak={userData.streak}
-                  completedCases={userData.completedCases}
-                  accuracy={userData.accuracy}
-                  onLogout={handleLogout}
-                />
-              )}
+      <Suspense fallback={<SkeletonLoader type="dashboard" />}>
+        {userRole === 'faculty' ? (
+          <FacultyDashboard />
+        ) : userRole === 'admin' ? (
+          <AdminDashboard />
+        ) : (
+          <>
+            {subView === 'case-engine' ? (
+              <CaseEngine
+                caseType={selectedCaseType}
+                currentUserId={currentUserId}
+                onFinishCase={handleFinishCase}
+                onBack={() => setSubView('none')}
+              />
+            ) : subView === 'case-select' ? (
+              <CaseSelection
+                onSelectCase={(type) => {
+                  setSelectedCaseType(type);
+                  setSubView('case-engine');
+                }}
+                onBack={() => setSubView('none')}
+                bookmarkedCases={bookmarkedCases}
+                onToggleBookmark={toggleBookmark}
+              />
+            ) : (
+              <>
+                {currentTab === 'dashboard' && (
+                  <StudentDashboard
+                    onStartCase={() => setSubView('case-select')}
+                    onOpenAITutor={() => setCurrentTab('ai-tutor')}
+                    onOpenLeaderboard={() => setCurrentTab('leaderboard')}
+                    onOpenProgressReport={() => setShowProgressReport(true)}
+                    onOpenAudioSettings={() => setShowAudioSettings(true)}
+                    userName={userData.name}
+                    userLevel={userData.level}
+                    userProgress={Math.min(100, Math.round((userData.completedCases / 10) * 100))}
+                    xp={userData.xp}
+                    badgesCount={badges.length}
+                    streak={userData.streak}
+                    completedCases={userData.completedCases}
+                    accuracy={userData.accuracy}
+                    onLogout={handleLogout}
+                  />
+                )}
 
-              {currentTab === 'cases' && (
-                <CaseSelection
-                  onSelectCase={(type) => {
-                    setSelectedCaseType(type);
-                    setSubView('case-engine');
-                  }}
-                  onBack={() => setCurrentTab('dashboard')}
-                  bookmarkedCases={bookmarkedCases}
-                  onToggleBookmark={toggleBookmark}
-                />
-              )}
+                {currentTab === 'cases' && (
+                  <CaseSelection
+                    onSelectCase={(type) => {
+                      setSelectedCaseType(type);
+                      setSubView('case-engine');
+                    }}
+                    onBack={() => setCurrentTab('dashboard')}
+                    bookmarkedCases={bookmarkedCases}
+                    onToggleBookmark={toggleBookmark}
+                  />
+                )}
 
-              {currentTab === 'flowcharts' && (
-                <div className="p-4">
-                  <AlgorithmFlowchart interactiveMode={true} />
-                </div>
-              )}
+                {currentTab === 'flowcharts' && (
+                  <div className="p-4">
+                    <AlgorithmFlowchart interactiveMode={true} onFinishCase={handleFinishCase} />
+                  </div>
+                )}
 
-              {currentTab === 'ai-tutor' && (
-                <div className="p-4">
-                  <AITutor onClose={() => setCurrentTab('dashboard')} />
-                </div>
-              )}
+                {currentTab === 'ai-tutor' && (
+                  <div className="p-4">
+                    <AITutor onClose={() => setCurrentTab('dashboard')} />
+                  </div>
+                )}
 
-              {currentTab === 'modules' && (
-                <LearningModules currentUserId={currentUserId} />
-              )}
+                {currentTab === 'modules' && (
+                  <LearningModules currentUserId={currentUserId} />
+                )}
 
-              {currentTab === 'leaderboard' && (
-                <div className="p-4">
-                  <LeaderboardModal onClose={() => setCurrentTab('dashboard')} entries={leaderboardEntries} badges={badges} onChallenge={(name) => alert(`Challenge sent to ${name}!`)} />
-                </div>
-              )}
+                {currentTab === 'leaderboard' && (
+                  <div className="p-4">
+                    <LeaderboardModal onClose={() => setCurrentTab('dashboard')} entries={leaderboardEntries} badges={badges} onChallenge={(name) => alert(`Challenge sent to ${name}!`)} />
+                  </div>
+                )}
 
-              {currentTab === 'analytics' && (
-                <div className="p-4">
-                  <Analytics />
-                </div>
-              )}
+                {currentTab === 'analytics' && (
+                  <div className="p-4">
+                    <Analytics />
+                  </div>
+                )}
 
-              {currentTab === 'certificate' && (
-                <div className="p-4 text-center space-y-6">
-                  <button
-                    onClick={() => setShowCertificate(true)}
-                    className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-extrabold rounded-2xl text-base shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all"
-                  >
-                    Generate & View "TB Diagnostic Expert" Institutional Certificate
-                  </button>
-                  <CertificateModal certificateData={certificateData} onClose={() => setCurrentTab('dashboard')} />
-                </div>
-              )}
+                {currentTab === 'certificate' && (
+                  <div className="p-4 text-center space-y-6">
+                    <button
+                      onClick={() => setShowCertificate(true)}
+                      className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-extrabold rounded-2xl text-base shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all"
+                    >
+                      Generate & View "TB Diagnostic Expert" Institutional Certificate
+                    </button>
+                    <CertificateModal certificateData={certificateData} onClose={() => setCurrentTab('dashboard')} />
+                  </div>
+                )}
 
-              {currentTab === 'profile' && (
-                <Profile
-                  userName={userData.name}
-                  userEmail={userData.email}
-                  userLevel={userData.level}
-                  xp={userData.xp}
-                  badgesCount={badges.length}
-                  streak={userData.streak}
-                  onLogout={handleLogout}
-                  onOpenProgressReport={() => setShowProgressReport(true)}
-                />
-              )}
-            </>
-          )}
-        </>
-      )}
+                {currentTab === 'profile' && (
+                  <Profile
+                    userName={userData.name}
+                    userEmail={userData.email}
+                    userLevel={userData.level}
+                    xp={userData.xp}
+                    badgesCount={badges.length}
+                    streak={userData.streak}
+                    onLogout={handleLogout}
+                    onOpenProgressReport={() => setShowProgressReport(true)}
+                  />
+                )}
+              </>
+            )}
+          </>
+        )}
+      </Suspense>
 
       {/* Floating Voice Assistant */}
       <VoiceAssistant onNavigate={(tab) => {

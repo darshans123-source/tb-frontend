@@ -44,7 +44,7 @@ export default function StudentDashboard({
           <h1 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
             TB Quest Dashboard
           </h1>
-          <p className="text-slate-400 text-[10px] sm:text-xs font-mono mt-0.5 sm:mt-1">Navodaya Medical College • Department of Microbiology</p>
+          <p className="text-slate-400 text-[10px] sm:text-xs font-mono mt-0.5 sm:mt-1">Skill Development Center • NIT Raichur</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-cyan-800/40 shadow-[0_0_25px_rgba(6,182,212,0.15)] w-full md:w-auto">
@@ -95,7 +95,7 @@ export default function StudentDashboard({
             soundService.playClick();
             onStartCase();
           }}
-          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-xs sm:text-sm shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all"
+          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-xs sm:text-sm shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 shrink-0"
         >
           <Stethoscope size={16} /> Start New Case
         </button>
@@ -105,7 +105,7 @@ export default function StudentDashboard({
             soundService.playClick();
             onOpenAITutor();
           }}
-          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-cyan-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-cyan-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 shrink-0"
         >
           <Bot size={16} className="text-cyan-400" /> AI Clinical Tutor
         </button>
@@ -116,7 +116,7 @@ export default function StudentDashboard({
             soundService.playTrophy();
             onOpenLeaderboard();
           }}
-          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-amber-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-amber-300 transition-all shadow-[0_0_15px_rgba(245,158,11,0.1)]"
+          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-amber-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-amber-300 transition-all shadow-[0_0_15px_rgba(245,158,11,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-amber-400 shrink-0"
         >
           <Trophy size={16} className="text-amber-400" /> Rankings ({badgesCount} Badges)
         </button>
@@ -126,12 +126,12 @@ export default function StudentDashboard({
             soundService.playClick();
             onOpenProgressReport();
           }}
-          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-emerald-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-emerald-300 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+          className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-900 border border-emerald-500/30 hover:bg-slate-800 rounded-xl font-semibold text-xs sm:text-sm text-emerald-300 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 shrink-0"
         >
           <Download size={16} className="text-emerald-400" /> Progress Report
         </button>
 
-        <div className="ml-auto flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-slate-300">
+        <div className="sm:ml-auto flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-slate-300">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>Streak: {streak} Days 🔥</span>
         </div>

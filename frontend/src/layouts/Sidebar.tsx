@@ -33,18 +33,35 @@ export default function Sidebar({ currentTab, setCurrentTab, onLogout, isOpenMob
       )}
 
       <aside
-        className={`w-64 h-screen bg-slate-950 border-r border-slate-800 flex flex-col p-4 fixed left-0 top-0 z-50 transition-transform duration-300 ${
+        className={`w-72 h-screen bg-slate-950 border-r border-slate-800/80 flex flex-col p-4 fixed left-0 top-0 z-50 transition-transform duration-300 ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        <div className="mb-6 p-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-white text-sm shadow-md">
-              TB
-            </div>
-            <div>
-              <h1 className="text-lg font-black text-white leading-none">TB Quest</h1>
-              <p className="text-[10px] text-slate-400 font-mono mt-0.5">Navodaya Medical College</p>
+        {/* Institutional Branding Header */}
+        <div className="mb-6 p-2 pb-4 flex items-center justify-between border-b border-slate-800/80">
+          <div className="flex items-center gap-3">
+            {/* Uploaded NIT Logo */}
+            <img
+              src="/nit_logo.png"
+              alt="Navodaya Institute of Technology Logo"
+              className="w-12 h-12 sm:w-14 sm:h-14 object-contain shrink-0 drop-shadow-sm"
+              style={{ width: '52px', height: '52px' }}
+            />
+            
+            {/* Text Hierarchy */}
+            <div className="flex flex-col justify-center min-w-0">
+              <h1 className="text-[26px] sm:text-[28px] font-extrabold text-white leading-none tracking-tight">
+                TB Quest
+              </h1>
+              <p className="text-[13px] font-semibold text-cyan-400 leading-tight mt-1 truncate">
+                Skill Development Center
+              </p>
+              <p className="text-[12px] font-medium text-slate-300 leading-tight truncate">
+                Navodaya Institute of Technology
+              </p>
+              <p className="text-[12px] font-medium text-slate-400 leading-tight">
+                Raichur
+              </p>
             </div>
           </div>
 
@@ -52,14 +69,15 @@ export default function Sidebar({ currentTab, setCurrentTab, onLogout, isOpenMob
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="p-1 text-slate-400 hover:text-white lg:hidden"
+              className="p-1.5 text-slate-400 hover:text-white lg:hidden shrink-0"
+              aria-label="Close menu"
             >
               <X size={20} />
             </button>
           )}
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 space-y-1.5 overflow-y-auto custom-scrollbar" aria-label="Main Navigation">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.tab;
@@ -70,14 +88,14 @@ export default function Sidebar({ currentTab, setCurrentTab, onLogout, isOpenMob
                   setCurrentTab(item.tab);
                   if (onCloseMobile) onCloseMobile();
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                   isActive
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-950/50'
+                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-950/50'
                     : 'text-slate-400 hover:bg-slate-900 hover:text-white'
                 }`}
               >
-                <Icon size={18} />
-                {item.name}
+                <Icon size={18} className="shrink-0" />
+                <span>{item.name}</span>
               </button>
             );
           })}
@@ -89,10 +107,10 @@ export default function Sidebar({ currentTab, setCurrentTab, onLogout, isOpenMob
               onLogout();
               if (onCloseMobile) onCloseMobile();
             }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-xl transition-all font-semibold"
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-xl transition-all font-semibold outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
           >
-            <LogOut size={18} />
-            Logout
+            <LogOut size={18} className="shrink-0" />
+            <span>Logout</span>
           </button>
         </div>
       </aside>

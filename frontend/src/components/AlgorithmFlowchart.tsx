@@ -1,201 +1,279 @@
 import { useState } from 'react';
 import { AlgorithmFlowcharts } from '../data/algorithmData';
 import { AlgorithmNode } from '../types';
-import { FileText, ArrowRight, CheckCircle2, AlertCircle, Info, Sparkles, BookOpen } from 'lucide-react';
+import InteractiveFlowchartCanvas from './InteractiveFlowchartCanvas';
+import NodeInspectorModal from './NodeInspectorModal';
+import ClinicalSimulationEngine from './ClinicalSimulationEngine';
+import AlgorithmAssessmentMode from './AlgorithmAssessmentMode';
+import { 
+  BookOpen, Sparkles, Stethoscope, Trophy, Users, 
+  RotateCcw, CheckCircle2, Info, ArrowRight, Activity 
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface AlgorithmFlowchartProps {
-  activeNodeId?: string;
-  onSelectNode?: (node: AlgorithmNode) => void;
   interactiveMode?: boolean;
+  onFinishCase?: (score: number, xpGained: number) => void;
 }
 
-export default function AlgorithmFlowchart({ activeNodeId, onSelectNode, interactiveMode = true }: AlgorithmFlowchartProps) {
+export default function AlgorithmFlowchart({ interactiveMode = true, onFinishCase }: AlgorithmFlowchartProps) {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<'pulmonary' | 'pediatric'>('pulmonary');
-  const flowchartData = selectedAlgorithm === 'pulmonary' ? AlgorithmFlowcharts.pulmonaryTB : AlgorithmFlowcharts.pediatricTB;
-  const [selectedNode, setSelectedNode] = useState<AlgorithmNode | null>(flowchartData.nodes[0]);
+  const [activeMode, setActiveMode] = useState<'learning' | 'simulation' | 'assessment' | 'faculty'>('learning');
+  
+  const flowchartData = selectedAlgorithm === 'pulmonary' 
+    ? AlgorithmFlowcharts.pulmonaryTB 
+    : AlgorithmFlowcharts.pediatricTB;
+
+  const [activeNodeId, setActiveNodeId] = useState<string>(flowchartData.nodes[0]?.id || 'node_start');
+  const [visitedNodeIds, setVisitedNodeIds] = useState<string[]>([flowchartData.nodes[0]?.id || 'node_start']);
+  const [inspectedNode, setInspectedNode] = useState<AlgorithmNode | null>(null);
 
   const handleNodeClick = (node: AlgorithmNode) => {
-    setSelectedNode(node);
-    if (onSelectNode) {
-      onSelectNode(node);
+    setInspectedNode(node);
+    setActiveNodeId(node.id);
+    if (!visitedNodeIds.includes(node.id)) {
+      setVisitedNodeIds(prev => [...prev, node.id]);
     }
   };
 
-  const getCategoryBadgeClass = (category: AlgorithmNode['category']) => {
-    switch (category) {
-      case 'presumptive':
-        return 'bg-amber-950/80 border-amber-500/50 text-amber-300';
-      case 'investigation':
-        return 'bg-cyan-950/80 border-cyan-500/50 text-cyan-300';
-      case 'result':
-        return 'bg-purple-950/80 border-purple-500/50 text-purple-300';
-      case 'treatment':
-        return 'bg-emerald-950/80 border-emerald-500/50 text-emerald-300';
-      case 'referral':
-        return 'bg-rose-950/80 border-rose-500/50 text-rose-300';
-      default:
-        return 'bg-slate-800 border-slate-700 text-slate-300';
-    }
+  const handleSelectAlgorithm = (algo: 'pulmonary' | 'pediatric') => {
+    setSelectedAlgorithm(algo);
+    const newFlowchart = algo === 'pulmonary' ? AlgorithmFlowcharts.pulmonaryTB : AlgorithmFlowcharts.pediatricTB;
+    const startId = newFlowchart.nodes[0]?.id || 'node_start';
+    setActiveNodeId(startId);
+    setVisitedNodeIds([startId]);
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-slate-950 border border-cyan-500/30 rounded-2xl sm:rounded-3xl text-white shadow-[0_0_30px_rgba(6,182,212,0.15)] space-y-4 sm:space-y-6">
-      {/* Header & Algorithm Switcher */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-800">
-        <div>
-          <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] sm:text-xs uppercase tracking-wider mb-1">
-            <BookOpen size={16} /> Reference PDF Annexure Flowcharts
+    <div className="space-y-6 text-white">
+      {/* Top Banner & Flowchart / Mode Selector Controls */}
+      <div className="p-6 bg-slate-950 border border-cyan-500/30 rounded-3xl shadow-[0_0_35px_rgba(6,182,212,0.15)] space-y-4">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs uppercase tracking-wider mb-1">
+              <BookOpen size={16} /> NTEP / WHO Official Diagnostic Standard
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
+              {flowchartData.title}
+            </h1>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">
+              {flowchartData.subtitle} ({flowchartData.pdfReference})
+            </p>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
-            {flowchartData.title}
-          </h2>
-          <p className="text-slate-400 text-xs mt-1">{flowchartData.subtitle} ({flowchartData.pdfReference})</p>
-        </div>
 
-        {interactiveMode && (
-          <div className="flex flex-wrap bg-slate-900 p-1.5 rounded-2xl border border-slate-800 shrink-0 gap-1">
+          {/* Algorithm Switcher (Pulmonary vs Pediatric) */}
+          <div className="flex bg-slate-900 p-1.5 rounded-2xl border border-slate-800 shrink-0 gap-1">
             <button
-              onClick={() => {
-                setSelectedAlgorithm('pulmonary');
-                setSelectedNode(AlgorithmFlowcharts.pulmonaryTB.nodes[0]);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all ${
+              onClick={() => handleSelectAlgorithm('pulmonary')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 selectedAlgorithm === 'pulmonary'
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Pulmonary TB (Pages 21/23)
+              Pulmonary TB Pathway
             </button>
             <button
-              onClick={() => {
-                setSelectedAlgorithm('pediatric');
-                setSelectedNode(AlgorithmFlowcharts.pediatricTB.nodes[0]);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all ${
+              onClick={() => handleSelectAlgorithm('pediatric')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 selectedAlgorithm === 'pediatric'
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Pediatric TB (Page 22)
+              Pediatric TB Pathway
             </button>
           </div>
+        </div>
+
+        {/* 4 Primary Interactive Modes Selector Bar */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
+          <button
+            onClick={() => setActiveMode('learning')}
+            className={`p-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 border ${
+              activeMode === 'learning'
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-400 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <BookOpen size={16} /> Learning Mode
+          </button>
+
+          <button
+            onClick={() => setActiveMode('simulation')}
+            className={`p-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 border ${
+              activeMode === 'simulation'
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-400 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Stethoscope size={16} /> Clinical Simulation
+          </button>
+
+          <button
+            onClick={() => setActiveMode('assessment')}
+            className={`p-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 border ${
+              activeMode === 'assessment'
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-400 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Trophy size={16} /> Assessment Mode
+          </button>
+
+          <button
+            onClick={() => setActiveMode('faculty')}
+            className={`p-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 border ${
+              activeMode === 'faculty'
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-400 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Users size={16} /> Faculty View
+          </button>
+        </div>
+      </div>
+
+      {/* Render Selected Mode View */}
+      <AnimatePresence mode="wait">
+        {activeMode === 'learning' && (
+          <motion.div
+            key="learning-mode"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="space-y-6"
+          >
+            <InteractiveFlowchartCanvas
+              nodes={flowchartData.nodes}
+              activeNodeId={activeNodeId}
+              visitedNodeIds={visitedNodeIds}
+              onNodeClick={handleNodeClick}
+            />
+          </motion.div>
         )}
-      </div>
 
-      {/* Interactive Visual Flowchart Node Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Left 2 Cols: Interactive Node Grid */}
-        <div className="lg:col-span-2 space-y-4">
-          <p className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
-            <Sparkles size={14} className="text-cyan-400 shrink-0" /> Click any flowchart decision node to inspect clinical guidelines & criteria:
-          </p>
+        {activeMode === 'simulation' && (
+          <motion.div
+            key="simulation-mode"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <ClinicalSimulationEngine
+              nodes={flowchartData.nodes}
+              onInspectNode={(node) => setInspectedNode(node)}
+            />
+          </motion.div>
+        )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[450px] sm:max-h-[500px] overflow-y-auto pr-1 sm:pr-2 custom-scrollbar">
-            {flowchartData.nodes.map((node, idx) => {
-              const isSelected = selectedNode?.id === node.id;
-              const isActiveNode = activeNodeId === node.id;
+        {activeMode === 'assessment' && (
+          <motion.div
+            key="assessment-mode"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <AlgorithmAssessmentMode
+              nodes={flowchartData.nodes}
+              onFinishAssessment={(score, gainedXp) => {
+                if (onFinishCase) {
+                  onFinishCase(score, gainedXp);
+                }
+              }}
+            />
+          </motion.div>
+        )}
 
-              return (
-                <button
-                  key={node.id}
-                  onClick={() => handleNodeClick(node)}
-                  className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all relative group flex flex-col justify-between ${
-                    isActiveNode
-                      ? 'bg-amber-950/70 border-amber-400 text-amber-100 ring-2 ring-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)] animate-pulse'
-                      : isSelected
-                      ? 'bg-cyan-950/70 border-cyan-400 text-cyan-100 ring-1 ring-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                      : 'bg-slate-900/70 border-slate-800 hover:border-cyan-500/40 text-slate-300'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase font-bold border ${getCategoryBadgeClass(node.category)}`}>
-                      {node.category}
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-mono">Node #{idx + 1}</span>
-                  </div>
-
-                  <h3 className="font-bold text-xs sm:text-sm text-white mb-1 group-hover:text-cyan-300 transition-colors">
-                    {node.label}
-                  </h3>
-                  <p className="text-slate-400 text-xs line-clamp-2">{node.description}</p>
-
-                  {node.nextNodes.length > 0 && (
-                    <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center gap-1 text-[11px] text-cyan-400 font-mono">
-                      <span>Branches to {node.nextNodes.length} node(s)</span>
-                      <ArrowRight size={12} />
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Right Col: Selected Node Inspector Panel */}
-        <div className="bg-slate-900/90 border border-cyan-500/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-inner">
-          {selectedNode ? (
-            <motion.div
-              key={selectedNode.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-3 sm:space-y-4"
-            >
-              <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-slate-800">
-                <span className={`px-2.5 py-0.5 sm:py-1 rounded-full text-xs font-mono uppercase font-bold border ${getCategoryBadgeClass(selectedNode.category)}`}>
-                  {selectedNode.category} Node
-                </span>
-                <span className="text-xs text-cyan-400 font-mono">{selectedNode.id}</span>
-              </div>
-
+        {activeMode === 'faculty' && (
+          <motion.div
+            key="faculty-mode"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="p-6 bg-slate-900 border border-cyan-500/30 rounded-3xl space-y-6 shadow-xl"
+          >
+            <div className="flex items-center gap-3 pb-4 border-b border-slate-800">
+              <Users className="text-cyan-400" size={24} />
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{selectedNode.label}</h3>
-                <p className="text-slate-300 text-xs leading-relaxed bg-slate-950 p-3 rounded-xl border border-slate-800">
-                  {selectedNode.description}
-                </p>
+                <h3 className="text-lg font-bold text-white">Faculty Algorithm Tracking Dashboard</h3>
+                <p className="text-xs text-slate-400">Monitor student decision pathways, accuracy, velocity, and common diagnostic errors.</p>
               </div>
-
-              <div className="p-3 sm:p-4 bg-cyan-950/40 border border-cyan-500/30 rounded-xl space-y-1.5 sm:space-y-2">
-                <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs">
-                  <Info size={16} />
-                  <span>National NTEP Guideline Rule:</span>
-                </div>
-                <p className="text-slate-200 text-xs leading-relaxed italic">
-                  "{selectedNode.guidelineNote}"
-                </p>
-              </div>
-
-              {selectedNode.nextNodes.length > 0 && (
-                <div>
-                  <p className="text-xs uppercase font-mono text-slate-400 mb-2">Connected Downstream Pathways:</p>
-                  <ul className="space-y-1.5">
-                    {selectedNode.nextNodes.map(nextId => {
-                      const targetNode = flowchartData.nodes.find(n => n.id === nextId);
-                      return (
-                        <li key={nextId} className="text-xs text-cyan-300 bg-slate-950 p-2 rounded-lg border border-slate-800 flex items-center justify-between">
-                          <span>{targetNode?.label || nextId}</span>
-                          <ArrowRight size={12} className="text-cyan-500" />
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </motion.div>
-          ) : (
-            <div className="text-center py-12 text-slate-500 text-xs">
-              Select a node on the left to inspect detailed clinical decision guidelines.
             </div>
-          )}
 
-          <div className="pt-4 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex items-center gap-1.5">
-            <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
-            <span>NTEP 2024 Guidelines Standard Flowchart</span>
-          </div>
-        </div>
-      </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                <span className="text-[10px] font-mono uppercase text-slate-400">Total Algorithm Runs</span>
+                <p className="text-2xl font-black text-cyan-400">142 Cases</p>
+                <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
+                  <CheckCircle2 size={12} /> 88.4% Completion Rate
+                </span>
+              </div>
+
+              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                <span className="text-[10px] font-mono uppercase text-slate-400">Avg Decision Velocity</span>
+                <p className="text-2xl font-black text-purple-400">18.4s / step</p>
+                <span className="text-[11px] text-slate-400 font-mono">Standard NTEP Target: &lt; 30s</span>
+              </div>
+
+              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                <span className="text-[10px] font-mono uppercase text-slate-400">Most Common Deviation</span>
+                <p className="text-sm font-bold text-rose-400">Skipping CBNAAT in Smear (+)</p>
+                <span className="text-[11px] text-slate-400 font-mono">24% students affected</span>
+              </div>
+            </div>
+
+            <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-3">
+              <h4 className="text-xs font-mono uppercase font-bold text-cyan-400">Pathway Distribution Analytics:</h4>
+              <div className="space-y-2">
+                <div>
+                  <div className="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>1st Line Anti-TB Treatment Pathway (DS-TB)</span>
+                    <span className="font-mono text-cyan-400 font-bold">58%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-cyan-400 rounded-full" style={{ width: '58%' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>PMDT Drug-Resistant Referral (RR-TB)</span>
+                    <span className="font-mono text-rose-400 font-bold">22%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-rose-500 rounded-full" style={{ width: '22%' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>Clinically Diagnosed & Alternative Pathway</span>
+                    <span className="font-mono text-amber-400 font-bold">20%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-400 rounded-full" style={{ width: '20%' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Node Inspector Modal */}
+      <AnimatePresence>
+        {inspectedNode && (
+          <NodeInspectorModal
+            node={inspectedNode}
+            onClose={() => setInspectedNode(null)}
+            onJumpToSimulation={(nodeId) => {
+              setActiveMode('simulation');
+              setActiveNodeId(nodeId);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

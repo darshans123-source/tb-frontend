@@ -37,7 +37,7 @@ export default function ProgressReportModal({
             </div>
             <div>
               <h2 className="text-base sm:text-2xl font-bold">Official Clinical Progress Report</h2>
-              <p className="text-[10px] sm:text-xs text-slate-400 font-mono">Navodaya Medical College • Department of Microbiology</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-mono">Skill Development Center • NIT Raichur</p>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
@@ -70,7 +70,7 @@ export default function ProgressReportModal({
               TB Quest Academic & Clinical Performance Transcript
             </h1>
             <p className="text-[10px] sm:text-xs text-slate-400 font-mono mt-1 print:text-slate-600">
-              Navodaya Institute of Technology & Medical Sciences • Certified Gamified Diagnostics
+              Skill Development Center • NIT Raichur • Certified Clinical Diagnostics
             </p>
           </div>
 

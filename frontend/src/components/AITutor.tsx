@@ -11,7 +11,7 @@ export default function AITutor({ onClose }: AITutorProps) {
   const [messages, setMessages] = useState<{ sender: 'ai' | 'user'; text: string; source?: string }[]>([
     {
       sender: 'ai',
-      text: "Hello Dr. Student! I am your AI clinical mentor at Navodaya Medical College. Ask me anything about TB diagnostic algorithms, CBNAAT interpretation, pediatric scoring, HIV-TB co-infection, or MDR management."
+      text: "Hello Dr. Student! I am your AI clinical mentor at Skill Development Center, NIT Raichur. Ask me anything about TB diagnostic algorithms, CBNAAT interpretation, pediatric scoring, HIV-TB co-infection, or MDR management."
     }
   ]);
   const [input, setInput] = useState('');
@@ -65,7 +65,7 @@ export default function AITutor({ onClose }: AITutorProps) {
                 TB Quest AI Clinical Tutor <Sparkles size={16} className="text-amber-400" />
               </h3>
               <p className="text-[10px] sm:text-xs text-slate-400 font-mono">
-                Clinical Reasoning Engine • Navodaya Medical College
+                Clinical Reasoning Engine • Skill Development Center, NIT Raichur
               </p>
             </div>
           </div>

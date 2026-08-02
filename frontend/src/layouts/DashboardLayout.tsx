@@ -14,7 +14,7 @@ export default function DashboardLayout({ children, currentTab, setCurrentTab, u
         isOpenMobile={isMobileMenuOpen}
         onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
-      <div className="flex-1 ml-0 lg:ml-64 w-full min-w-0 transition-all duration-300">
+      <div className="flex-1 ml-0 lg:ml-72 w-full min-w-0 transition-all duration-300">
         <Header
           userData={userData}
           onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}

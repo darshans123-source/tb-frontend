@@ -11,7 +11,7 @@ export default function Header({ userData, onToggleMobileMenu }: HeaderProps) {
   const { mode, toggleTheme } = useTheme();
 
   return (
-    <header className="h-16 bg-slate-950/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 sm:px-8 fixed top-0 left-0 lg:left-64 right-0 z-30 transition-all">
+    <header className="h-16 bg-slate-950/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 sm:px-8 fixed top-0 left-0 lg:left-72 right-0 z-30 transition-all">
       <div className="flex items-center gap-3">
         {/* Mobile Hamburger Menu Button */}
         <button

@@ -51,10 +51,10 @@ export default function CertificateModal({ certificateData, onClose }: Certifica
               </div>
             </div>
             <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-mono text-amber-400 font-bold">
-              Centre of Excellence • Navodaya Institute of Technology
+              Skill Development Center • NIT Raichur
             </h2>
             <h3 className="text-xs sm:text-sm font-semibold text-slate-300">
-              Navodaya Medical College, Raichur • Department of Microbiology
+              National Institute of Technology, Raichur
             </h3>
             <div className="w-32 sm:w-48 h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto my-2 sm:my-3"></div>
           </div>
@@ -91,9 +91,9 @@ export default function CertificateModal({ certificateData, onClose }: Certifica
           {/* Signatures & Verification Footnote */}
           <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4 pt-6 sm:pt-8 relative z-10 border-t border-slate-800/80 mt-4 sm:mt-6 text-center sm:text-left">
             <div className="space-y-0.5">
-              <p className="text-xs font-bold text-slate-200">Dr. Anandkumar Harwalkar</p>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 font-mono">Professor, Dept. of Microbiology</p>
-              <p className="text-[9px] sm:text-[10px] text-slate-500 font-mono">Navodaya Medical College, Raichur</p>
+              <p className="text-xs font-bold text-slate-200">Skill Development Center</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-400 font-mono">Clinical Faculty & Mentors</p>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 font-mono">Skill Development Center, NIT Raichur</p>
             </div>
 
             <div className="space-y-1">
