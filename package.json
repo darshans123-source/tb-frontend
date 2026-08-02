@@ -1,43 +1,19 @@
 {
-  "name": "react-example",
+  "name": "tb-quest-monorepo",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "description": "TB Quest: Gamified AI Tuberculosis Diagnostic Platform for Medical Students",
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
-    "start": "node dist/server.cjs",
-    "lint": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@google/genai": "^2.4.0",
-    "@mui/icons-material": "^9.2.0",
-    "@mui/material": "^9.2.0",
-    "@supabase/supabase-js": "^2.111.0",
-    "@tailwindcss/vite": "^4.1.14",
-    "@types/d3": "^7.4.3",
-    "@vitejs/plugin-react": "^5.0.4",
-    "d3": "^7.9.0",
-    "dotenv": "^17.2.3",
-    "express": "^4.21.2",
-    "lottie-react": "^2.4.1",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "recharts": "^3.10.1",
-    "vite": "^6.2.3"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "start": "npm --prefix backend run start"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.14.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
-    "tailwindcss": "^4.1.14",
-    "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.3"
+    "concurrently": "^9.1.2"
   }
 }
